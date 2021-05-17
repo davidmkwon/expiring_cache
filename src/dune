@@ -1,0 +1,3 @@
+(library
+  (name expiring_cache)
+  (libraries core))
