@@ -1,12 +1,5 @@
 open Core
 
-(* semantics: the cache will reset the expiration timer for a key everytime it
- * is [set] *)
-
-(* [Expiring_cache.t] is essentially a hashtable that holds elements whose
- * lifetime has not surpassed [max_age]. When the number of elements in the
- * cache exceeds [max_len], the cache evicts elements in FIFO fashion *)
-
 type 'v entry =
   { mutable data: 'v
   ; mutable created: float
@@ -19,9 +12,6 @@ type ('a, 'b) t =
   ; max_age: float (* note: max_age is in ms *)
   }
 
-(* [create max_len max_age m] creates a [Expiring_cache.t] with the given
- * characteristics. [m] must be hashable, sexpable, and comparable due to the
- * underlying Base Hashtbl implementation *)
 let create ?(max_len = 100) ?(max_age = 100.) m =
   { ht = Hashtbl.create m
   ; fifo = Doubly_linked.create ()
